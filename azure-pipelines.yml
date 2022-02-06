@@ -32,8 +32,6 @@ steps:
     traceLevel: 'Verbose'
 
 - task: UiPathRunJob@2
-  dependsOn:Deploy
-  condition:succeededOrFailed()
   inputs:
     orchestratorConnection: 'ConnectFin'
     processName: 'cicdpipeline'
