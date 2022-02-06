@@ -13,10 +13,9 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-stages:
--stage: Build
+
 - task: UiPathPack@2
-  stageName: Pack
+  
   inputs:
     versionType: 'AutoVersion'
     projectJsonPath: $(projectPath)
@@ -25,7 +24,6 @@ stages:
     outputPath: $(projectPackagePath)
 
 - task: UiPathDeploy@2
-  stage: Deploy
   inputs:
     orchestratorConnection: 'ConnectFin'
     packagesPath: '$(projectPackagePath)'
@@ -34,7 +32,6 @@ stages:
     traceLevel: 'Verbose'
 
 - task: UiPathRunJob@2
-  stage: Run
   dependsOn:Deploy
   condition:succeededOrFailed()
   inputs:
