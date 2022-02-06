@@ -24,7 +24,9 @@ steps:
     outputType: 'Process'
     orchestratorConnection: 'ConnectFin'
     outputPath: $(projectPackagePath)
+
 - task: UiPathDeploy@2
+  stage:Deploy
   inputs:
     orchestratorConnection: 'ConnectFin'
     packagesPath: '$(projectPackagePath)'
@@ -33,6 +35,8 @@ steps:
     traceLevel: 'Verbose'
       
 - task: UiPathRunJob@2
+  dependsOn: Deploy
+  condition: succeededOrFailed()
   inputs:
     orchestratorConnection: 'ConnectFin'
     processName: 'cicdpipeline'
