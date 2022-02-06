@@ -32,7 +32,7 @@ steps:
     entryPoints: 'Main.xaml'
     traceLevel: 'Verbose'
       
- - task: UiPathRunJob@2
+- task: UiPathRunJob@2
   inputs:
     orchestratorConnection: 'ConnectFin'
     processName: 'CICDHello'
