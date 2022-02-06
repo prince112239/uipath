@@ -14,6 +14,7 @@ steps:
   displayName: 'Run a one-line script'
 
 stages:
+-stage: Build
 - task: UiPathPack@2
   stageName: Pack
   inputs:
