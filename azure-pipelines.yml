@@ -20,7 +20,24 @@ steps:
 - task: UiPathPack@2
   inputs:
     versionType: 'AutoVersion'
-    projectJsonPath: 'C:\Users\Prince\Documents\UiPath\cicdpipeline'
+    projectJsonPath: $(projectPath)
     outputType: 'Process'
     orchestratorConnection: 'ConnectFin'
-    outputPath: 'C:\Users\Prince\Documents\UiPath\cicdpipeline\Output'
+    outputPath: $(projectPackagePath)
+- task: UiPathDeploy@2
+  inputs:
+    orchestratorConnection: 'ConnectFin'
+    packagesPath: '$(projectPackagePath)'
+    folderName: 'Shared'
+    entryPoints: 'Main.xaml'
+    traceLevel: 'Verbose'
+        
+ - task: UiPathRunJob@2
+  inputs:
+    orchestratorConnection: 'ConnectFin'
+    processName: 'CICDHello'
+    folderName: 'Shared'
+    user: 'desktop-4m969hi\prince'
+    machine: 'local machines'
+    resultFilePath: '$(projectPackagePath)'
+    traceLevel: 'Verbose'
