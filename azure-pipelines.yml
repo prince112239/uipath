@@ -1,0 +1,55 @@
+trigger:
+  - master
+
+
+stages:
+  - stage: Build
+    displayName: Build Package
+    jobs: 
+    - job: BuildPackage
+      pool: Prince
+      steps:    
+      - task: UiPathPack@2
+        inputs:
+          versionType: 'AutoVersion'
+          projectJsonPath: $(projectPath)
+          outputType: 'Process'
+          orchestratorConnection: 'ConnectFin'
+          outputPath: $(projectPackagePath)
+      - publish: $(projectPackagePath)
+        artifact: drop
+        
+  - stage: DeployDEV
+    displayName: Deploy build artifact to DEV
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+     - job: Deploy
+       pool: Prince
+       steps:
+       - task: UiPathDeploy@2
+         inputs:
+          orchestratorConnection: 'ConnectFin'
+          packagesPath: '$(projectPackagePath)'
+          folderName: 'Shared'
+          entryPoints: 'Main.xaml'
+
+  - stage: RunBot
+    displayName: RunBot from Orch
+    dependsOn: DeployDEV
+    condition: succeededOrFailed()
+    jobs:
+      - job: RunBot
+        pool: Prince
+        steps:
+        - task: UiPathRunJob@2
+          inputs:
+            orchestratorConnection: 'ConnectFin'
+            processName: 'cicdpipeline'
+            folderName: 'Shared'
+            user: 'desktop-4m969hi\prince'
+            machine: 'desktop-4m969hi'
+            resultFilePath: '$(projectPackagePath)'
+            traceLevel: 'Verbose'
+        
+          
