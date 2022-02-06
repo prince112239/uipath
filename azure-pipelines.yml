@@ -31,7 +31,7 @@ steps:
     folderName: 'Shared'
     entryPoints: 'Main.xaml'
     traceLevel: 'Verbose'
-        
+      
  - task: UiPathRunJob@2
   inputs:
     orchestratorConnection: 'ConnectFin'
