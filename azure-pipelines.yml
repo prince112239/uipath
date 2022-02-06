@@ -23,4 +23,4 @@ steps:
     projectJsonPath: 'C:\Users\Prince\Documents\UiPath\cicdpipeline'
     outputType: 'Process'
     orchestratorConnection: 'ConnectFin'
-    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
+    outputPath: 'C:\Users\Prince\Documents\UiPath\cicdpipeline\Output'
