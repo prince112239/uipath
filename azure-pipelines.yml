@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  Prince
 
 steps:
 - script: echo Hello, world!
