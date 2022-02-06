@@ -13,12 +13,9 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
 - task: UiPathPack@2
-  stage: Pack
+  stageName: Pack
   inputs:
     versionType: 'AutoVersion'
     projectJsonPath: $(projectPath)
@@ -27,7 +24,7 @@ steps:
     outputPath: $(projectPackagePath)
 
 - task: UiPathDeploy@2
-  stage:Deploy
+  stage: Deploy
   inputs:
     orchestratorConnection: 'ConnectFin'
     packagesPath: '$(projectPackagePath)'
@@ -36,7 +33,7 @@ steps:
     traceLevel: 'Verbose'
 
 - task: UiPathRunJob@2
-  stage:Run
+  stage: Run
   dependsOn:Deploy
   condition:succeededOrFailed()
   inputs:
