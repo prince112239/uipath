@@ -35,7 +35,7 @@ steps:
 - task: UiPathRunJob@2
   inputs:
     orchestratorConnection: 'ConnectFin'
-    processName: 'CICDHello'
+    processName: 'cicdpipeline'
     folderName: 'Shared'
     user: 'desktop-4m969hi\prince'
     machine: 'local machines'
